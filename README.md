@@ -8,6 +8,14 @@ This project is still under heavy developement.
 
 You can find the [documentation](https://f1tenth-gym.readthedocs.io/en/latest/) of the environment here.
 
+## Conda installation
+```bash
+conda create -n f1tenth python=3.10
+conda activate f1tenth
+pip install setuptools==59.5.0 wheel==0.37.1 pip==21.3.1
+pip install -e .
+```
+
 ## Quickstart
 We recommend installing the simulation inside a virtualenv. You can install the environment by running:
 
@@ -16,7 +24,8 @@ virtualenv gym_env
 source gym_env/bin/activate
 git clone https://github.com/f1tenth/f1tenth_gym.git
 cd f1tenth_gym
-pip install -e .
+pip install -e .docker build -t f1tenth_gym_container -f Dockerfile .
+docker run --gpus all -it -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix f1tenth_gym_container
 ```
 
 Then you can run a quick waypoint follow example by:
@@ -27,9 +36,8 @@ python3 waypoint_follow.py
 
 A Dockerfile is also provided with support for the GUI with nvidia-docker (nvidia GPU required):
 ```bash
-docker build -t f1tenth_gym_container -f Dockerfile .
-docker run --gpus all -it -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix f1tenth_gym_container
-````
+
+```
 Then the same example can be ran.
 
 ## Known issues
