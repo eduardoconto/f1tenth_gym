@@ -87,9 +87,8 @@ class Track:
         TrackSpec
             track specification
         """
-        with open(filespec, "r") as yaml_stream:
-            map_metadata = yaml.safe_load(yaml_stream)
-            track_spec = TrackSpec(name=track, **map_metadata)
+        track_spec = TrackSpec(name=track)
+        track_spec.load(filespec)
         return track_spec
 
     @staticmethod

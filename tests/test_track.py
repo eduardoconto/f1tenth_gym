@@ -52,6 +52,9 @@ class TestTrack(unittest.TestCase):
             trackdirname = trackdir.stem
             if "_tmp" in trackdirname.lower():
                 continue
+            # Skip hidden directories (starting with .)
+            if trackdirname.startswith("."):
+                continue
             self.assertTrue(
                 trackdirname[0].isupper(), f"trackdir {trackdirname} is not capitalized"
             )
