@@ -2,7 +2,7 @@ from __future__ import annotations
 import time
 import uuid
 import pathlib
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Tuple, Optional
 
 import numpy as np
@@ -10,6 +10,7 @@ import yaml
 from PIL import Image
 from PIL.Image import Transpose
 from yamldataclassconfig.config import YamlDataClassConfig
+from marshmallow import fields as mm_fields
 
 from . import Raceline
 from .cubic_spline import CubicSplineND
@@ -17,13 +18,34 @@ from .utils import find_track_dir
 
 @dataclass
 class TrackSpec(YamlDataClassConfig):
-    name: Optional[str]
-    image: Optional[str]
-    resolution: float
-    origin: Tuple[float, float, float]
-    negate: int
-    occupied_thresh: float
-    free_thresh: float
+    name: Optional[str] = field(
+        default=None,
+        metadata={"dataclasses_json": {"mm_field": mm_fields.String()}},
+    )
+    image: Optional[str] = field(
+        default=None,
+        metadata={"dataclasses_json": {"mm_field": mm_fields.String()}},
+    )
+    resolution: float = field(
+        default=0.0,
+        metadata={"dataclasses_json": {"mm_field": mm_fields.Float()}},
+    )
+    origin: list = field(
+        default=None,
+        metadata={"dataclasses_json": {"mm_field": mm_fields.List(mm_fields.Float())}}
+    )
+    negate: int = field(
+        default=0,
+        metadata={"dataclasses_json": {"mm_field": mm_fields.Integer()}}
+    )
+    occupied_thresh: float = field(
+        default=0.0,
+        metadata={"dataclasses_json": {"mm_field": mm_fields.Float()}}
+    )
+    free_thresh: float = field(
+        default=0.0,
+        metadata={"dataclasses_json": {"mm_field": mm_fields.Float()}}
+    )
 
 @dataclass
 class Track:
